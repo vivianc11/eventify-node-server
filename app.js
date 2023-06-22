@@ -1,8 +1,6 @@
 require('dotenv').config();
-require('./models/db')
-const userRouter = require('./routes/user')
-
-const User = require('./models/user');
+require('./models/db');
+const userRouter = require('./routes/user');
 
 
 const express = require('express');

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     fullname: {
@@ -17,6 +18,20 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+});
+
+// running this hash password function before saving user to database
+userSchema.pre('save', function(next) {
+    if(this.isNew || this.isModified('password')){
+        const saltRounds = 10;
+        bcrypt.hash(this.password, saltRounds, (err, hash) => {
+            if(err) return next(err);
+
+            this.password = hash;
+            next();
+        })
+    }
+    next();
 })
 
 userSchema.statics.isThisEmailInUse = async function(email) {

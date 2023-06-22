@@ -6,7 +6,7 @@ exports.createUser = async (req, res) => {
     if (!isNewUser){
         return res.json({
             success: false,
-            message: "This email already exists, try again"
+            message: "This email already exists, try signing in!"
         })
     }
     const isNewUsername = await User.isThisUsernameInUse(username);

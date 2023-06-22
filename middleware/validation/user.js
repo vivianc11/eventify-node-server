@@ -1,4 +1,4 @@
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 exports.validateUserSignUp = [
     check('fullname')
@@ -21,12 +21,14 @@ exports.validateUserSignUp = [
     check('password')
     .trim()
     .notEmpty()
+    .withMessage('Password is required!')
     .isLength({min: 8})
     .withMessage('Password must have atleast 8 characters'),
 
     check('confirmPassword')
     .trim()
     .notEmpty()
+    .withMessage('Please confirm password')
     .custom((value, {req}) => {
         if(value !== req.body.password){
             throw new Error('Passwords must match!')
@@ -34,3 +36,12 @@ exports.validateUserSignUp = [
         return true;
     })
 ]
+
+exports.userValidation = (req, res, next) => {
+    const result = validationResult(req).array();
+    // if there is no errors
+    if(!result.length) return next();
+
+    const error = result[0].msg;
+    res.json({success: false, message: error})
+}

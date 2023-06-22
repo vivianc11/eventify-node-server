@@ -8,12 +8,10 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true,
     },
     password: {
         type: String,
@@ -31,10 +29,11 @@ userSchema.statics.isThisEmailInUse = async function(email) {
         console.log('error inside isThisEmailInUse');
         return false;
     }
-    
-userSchema.statics.isThisUsernameInUse = async function(username) {
+};
+
+userSchema.statics.isThisUsernameInUse =  function(username) {
     try {
-        const foundUsername = await this.findOne({username})
+        const foundUsername = this.findOne({username})
         if(foundUsername) return false;
 
         return true;
@@ -42,7 +41,6 @@ userSchema.statics.isThisUsernameInUse = async function(username) {
         console.log('error inside isThisUsernameInUse')
         return false;
     }
-}
 };
 
 module.exports = mongoose.model('User', userSchema);

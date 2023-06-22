@@ -34,6 +34,17 @@ userSchema.pre('save', function(next) {
     next();
 })
 
+userSchema.method.comparePassword = async function (password) {
+    if(!password) throw new Error('Password is missing, can not compare!')
+
+    try{
+        const result = await bcrypt.compare(password, this.password);
+        return result;
+    } catch (error) {
+        console.log('Error while comparing password!', error.message);
+    }
+}
+
 userSchema.statics.isThisEmailInUse = async function(email) {
     try {
         const foundEmail = await this.findOne({email})

@@ -4,12 +4,14 @@ exports.validateUserSignUp = [
     check('fullname')
     .trim()
     .notEmpty()
+    .withMessage('Full name is required!')
     .isLength({min: 3})
     .withMessage('Name must have atleast 3 characters'),
 
     check('username')
     .trim()
     .notEmpty()
+    .withMessage('Username is required!')
     .isLength({min: 3})
     .withMessage('Username must have atleast 3 characters'),
 

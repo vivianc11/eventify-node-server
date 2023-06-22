@@ -31,10 +31,9 @@ userSchema.pre('save', function(next) {
             next();
         })
     }
-    next();
 })
 
-userSchema.method.comparePassword = async function (password) {
+userSchema.methods.comparePassword = async function (password) {
     if(!password) throw new Error('Password is missing, can not compare!')
 
     try{
@@ -57,9 +56,9 @@ userSchema.statics.isThisEmailInUse = async function(email) {
     }
 };
 
-userSchema.statics.isThisUsernameInUse =  function(username) {
+userSchema.statics.isThisUsernameInUse =  async function(username) {
     try {
-        const foundUsername = this.findOne({username})
+        const foundUsername = await this.findOne({username})
         if(foundUsername) return false;
 
         return true;

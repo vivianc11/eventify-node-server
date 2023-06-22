@@ -31,6 +31,7 @@ exports.validateUserSignUp = [
     .trim()
     .notEmpty()
     .withMessage('Please confirm password')
+    // adding custom method to check if the two passwords match
     .custom((value, {req}) => {
         if(value !== req.body.password){
             throw new Error('Passwords must match!')
@@ -47,3 +48,15 @@ exports.userValidation = (req, res, next) => {
     const error = result[0].msg;
     res.json({success: false, message: error})
 }
+
+exports.validateUserSignIn = [
+    check('email')
+    .trim()
+    .isEmail()
+    .withMessage('Email and password is required'),
+
+    check('password')
+    .trim()
+    .notEmpty()
+    .withMessage('Email and password is required')
+]

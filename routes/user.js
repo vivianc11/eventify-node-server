@@ -37,10 +37,12 @@ router.post('/upload-profile', isAuth, uploads.single('profile'), async (req, re
         const profileBuffer = req.file.buffer;
         const { width, height } = await sharp(profileBuffer).metadata();
         const profilePic = await sharp(profileBuffer).resize(Math.round(width * 0.5), Math.round(height * 0.5)).toBuffer()
-        res.send('successful upload')
     
         await User.findByIdAndUpdate(user._id, {profilePic})
+        res.status(201).json({success: true, message: 'Your profile pic is updated'})
+        
     } catch (error) {
+        res.status(500).json({success: false, message: 'server error, try uploading again after some time'})
         console.log('Error while uploading profile image', error.message)
     }
 })

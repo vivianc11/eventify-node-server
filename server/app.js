@@ -14,7 +14,7 @@ app.use(userRouter);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello, World')
+    res.json({success: true, message: "Connected to backend!"})
 })
 
 app.listen(PORT, () => {

@@ -3,7 +3,7 @@ const multer = require('multer');
 const User = require('../models/user');
 
 const router = express.Router();
-const { createUser, userSignIn, uploadProfilePic } = require('../controllers/user');
+const { createUser, userSignIn, uploadProfilePic, userLogout } = require('../controllers/user');
 const { validateUserSignUp, userValidation, validateUserSignIn } = require('../middleware/validation/user');
 const { isAuth } = require('../middleware/auth');
 
@@ -22,6 +22,7 @@ const uploads = multer({ storage, fileFilter })
 
 router.post('/create-user', validateUserSignUp, userValidation, createUser);
 router.post('/sign-in', validateUserSignIn, userValidation, userSignIn);
+router.post('/logout', isAuth, userLogout);
 
 // router.post('/create-post', isAuth, (req, res) => {
 //     res.send('Now are you in the secret route')

@@ -22,7 +22,7 @@ const uploads = multer({ storage, fileFilter })
 
 router.post('/create-user', validateUserSignUp, userValidation, createUser);
 router.post('/sign-in', validateUserSignIn, userValidation, userSignIn);
-router.post('/logout', isAuth, userLogout);
+router.get('/logout', isAuth, userLogout);
 
 // router.post('/create-post', isAuth, (req, res) => {
 //     res.send('Now are you in the secret route')

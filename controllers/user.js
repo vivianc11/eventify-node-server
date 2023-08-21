@@ -38,7 +38,7 @@ exports.userSignIn = async (req, res) => {
   const isMatch = await user.comparePassword(password);
   if (!isMatch) return res.json({ success: false, message: 'Email or password does not match!' });
 
-  const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+  const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 
   // if there are any existing tokens in the db, then assign it to oldTokens otherwise, assign oldToken to be empty
   let oldTokens = user.tokens || [];
@@ -48,7 +48,7 @@ exports.userSignIn = async (req, res) => {
       const timeDiff = Date.now() - parseInt(token.signedAt) / 1000
       // 1d = 86400secs
       // if this is true, it means the token is NOT expired
-      if (timeDiff < 86400) {
+      if (timeDiff < 86400*30) {
         return token
       }
     })

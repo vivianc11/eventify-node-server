@@ -74,7 +74,7 @@ exports.uploadProfilePic = async (req, res) => {
     })
 
     await User.findByIdAndUpdate(user._id, { profilePic: result.url })
-    res.status(201).json({ success: true, message: 'Your profile pic is updated' })
+    res.status(201).json({ profilePic: result.url, success: true, message: 'Your profile pic is updated' })
 
   } catch (error) {
     res.status(500).json({ success: false, message: 'server error, try uploading again after some time' })

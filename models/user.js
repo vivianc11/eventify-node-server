@@ -21,7 +21,13 @@ const userSchema = new mongoose.Schema({
     profilePic: {
         type: String,
     },
-    tokens: [{type: Object}]
+    tokens: [{type: Object}],
+    toDos: {
+        type: String,
+    },
+    events: {
+        type: String
+    },
 });
 
 // running this hash password function before saving user to database

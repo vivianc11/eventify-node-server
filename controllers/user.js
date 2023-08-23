@@ -95,3 +95,19 @@ exports.userLogout = async (req, res) => {
     res.json({sucess: true, message: 'You are logged out!'})
   }
 }
+
+exports.addToDo = async (req, res) => {
+  const { user } = req;
+  if (!user) return res.status(401).json({ message: 'No user found, unauthorized access' })
+
+  const { toDo } = req.body;
+
+  try {
+  await User.findByIdAndUpdate(user._id, { toDos: toDo })
+    res.status(201).json({ success: true, message: 'Your todo list is updated' })
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'server error, try again after some time' })
+    console.log('Error while adding todo', error.message)
+  }
+}

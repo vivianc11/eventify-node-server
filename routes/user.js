@@ -3,7 +3,7 @@ const multer = require('multer');
 const User = require('../models/user');
 
 const router = express.Router();
-const { createUser, userSignIn, uploadProfilePic, userLogout } = require('../controllers/user');
+const { createUser, userSignIn, uploadProfilePic, userLogout, addToDo } = require('../controllers/user');
 const { validateUserSignUp, userValidation, validateUserSignIn } = require('../middleware/validation/user');
 const { isAuth } = require('../middleware/auth');
 
@@ -44,5 +44,7 @@ router.get('/profile', isAuth, (req, res) => {
     }
   })
 })
+
+router.post('/add-toDo', isAuth, addToDo);
 
 module.exports = router;
